@@ -1,13 +1,12 @@
 import Icon from './ui/Icon.jsx';
 import { site } from '../config/site.js';
-import useActions from '../lib/useActions.js';
+import { onAnchor } from '../lib/scroll.js';
 import './Guarantee.css';
 
 /**
  * Exibida quando site.guarantee.confirmed = true (padrão).
  */
 export default function Guarantee() {
-  const { legal } = useActions();
   const { confirmed, days } = site.guarantee;
   if (!confirmed && !site.demoMode) return null;
 
@@ -42,9 +41,9 @@ export default function Guarantee() {
               Assine, instale e assista por {days} dias a partir do primeiro acesso. Se não gostar, peça o reembolso do valor
               pago dentro do prazo. Durante esse tempo, o risco fica com a gente.
             </p>
-            <button type="button" className="btn btn--ghost btn--sm" onClick={() => legal('refund', 'Política de cancelamento e reembolso')}>
-              Ver como funciona
-            </button>
+            <a href="#planos" className="btn btn--ghost btn--sm" onClick={onAnchor('planos')}>
+              Ver os planos
+            </a>
           </div>
         </div>
       </div>
