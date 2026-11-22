@@ -1,0 +1,116 @@
+.guarantee {
+  padding-top: 40px;
+}
+.guarantee__box {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 56px;
+  align-items: center;
+  padding: 56px;
+  border-radius: 32px;
+  background: radial-gradient(60% 100% at 0% 50%, rgba(213, 43, 189, 0.22), transparent 70%), linear-gradient(140deg, rgba(48, 22, 86, 0.6), rgba(22, 11, 45, 0.9));
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--shadow-soft);
+}
+.guarantee__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.guarantee__copy h2 {
+  font-size: clamp(28px, 3.6vw, 42px);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.guarantee__copy p {
+  font-size: 17px;
+  color: var(--c-gray);
+}
+.guarantee__copy .guarantee__detail {
+  font-size: 14.5px;
+  color: var(--c-muted);
+  max-width: 560px;
+}
+
+.seal {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  display: grid;
+  place-items: center;
+}
+.seal__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: spin 30s linear infinite;
+}
+.seal__ring text {
+  fill: var(--c-pink-soft);
+  font-family: var(--font-head);
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 3.2px;
+}
+.seal__core {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--grad-brand);
+  box-shadow: 0 0 0 10px rgba(240, 91, 203, 0.1), 0 0 70px -10px rgba(240, 91, 203, 0.8), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+.seal__core svg {
+  width: 26px;
+  height: 26px;
+  margin-bottom: 2px;
+}
+.seal__core strong {
+  font-family: var(--font-head);
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 0.95;
+}
+.seal__core span {
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 800px) {
+  .guarantee__box {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    padding: 40px 22px;
+    gap: 32px;
+  }
+  .guarantee__copy {
+    align-items: center;
+  }
+  .seal {
+    width: 190px;
+    height: 190px;
+  }
+  .seal__core {
+    width: 124px;
+    height: 124px;
+  }
+  .seal__core strong {
+    font-size: 44px;
+  }
+}

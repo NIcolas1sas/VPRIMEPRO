@@ -1,0 +1,287 @@
+/* ============================================================
+   SEÇÃO 03 — Seis cards de benefícios
+   ============================================================ */
+.fsection {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 100px 0 110px;
+}
+
+/* ---------- Fundo ---------- */
+.fsection__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(80% 50% at 50% 0%, rgba(118, 41, 217, 0.32), transparent 70%),
+    linear-gradient(180deg, rgba(33, 20, 56, 0.35), transparent 40%);
+}
+.fsection__beam {
+  position: absolute;
+  top: 40px;
+  width: 46%;
+  height: 260px;
+  border-top: 2px solid rgba(240, 91, 203, 0.55);
+  border-radius: 50%;
+  filter: blur(1px);
+  box-shadow: 0 -20px 60px -20px rgba(213, 43, 189, 0.6);
+  opacity: 0.7;
+}
+.fsection__beam--l {
+  left: -18%;
+  transform: rotate(14deg);
+}
+.fsection__beam--r {
+  right: -18%;
+  transform: rotate(-14deg);
+}
+.fsection__glow {
+  position: absolute;
+  left: 50%;
+  top: 22%;
+  width: 70%;
+  height: 50%;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(84, 33, 168, 0.35), transparent);
+  filter: blur(40px);
+}
+
+/* ---------- Headline ---------- */
+.fsection__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+.fsection__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.12em;
+  font-size: clamp(28px, 4.4vw, 58px);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+.fsection__brand {
+  display: inline-block;
+  padding: 0.02em 0.45em 0.08em;
+  border-radius: 999px;
+  border: 2px solid rgba(240, 91, 203, 0.75);
+  background: linear-gradient(180deg, rgba(118, 41, 217, 0.2), rgba(213, 43, 189, 0.1));
+  box-shadow: 0 0 30px -4px rgba(240, 91, 203, 0.7), inset 0 0 22px rgba(240, 91, 203, 0.22);
+}
+.fsection__brand .grad-text {
+  background: linear-gradient(100deg, #b98bff 0%, #d52bbd 45%, #ff9be8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding-right: 0.06em;
+}
+.fsection__sub {
+  font-size: clamp(15.5px, 1.5vw, 19px);
+  color: var(--c-gray);
+}
+
+/* ---------- Grade ---------- */
+.fsection .container {
+  max-width: 1480px;
+}
+.fsection__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+/* ---------- Card ---------- */
+.fcard {
+  position: relative;
+  isolation: isolate;
+  min-height: 240px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #12081f;
+  border: 1px solid rgba(155, 77, 255, 0.45);
+  box-shadow: 0 24px 50px -28px rgba(5, 1, 14, 0.95), 0 0 26px -12px rgba(213, 43, 189, 0.55),
+    inset 0 1px 0 rgba(255, 155, 232, 0.12);
+  /* opacity + transform também servem à entrada (.reveal) */
+  transition: opacity 0.9s var(--ease) var(--d, 0ms), transform 0.6s var(--ease), box-shadow 0.5s var(--ease),
+    border-color 0.35s;
+}
+.fcard.reveal.is-visible:hover,
+.fcard:hover {
+  transform: translateY(-4px) scale(1.015);
+  border-color: rgba(255, 155, 232, 0.85);
+  box-shadow: 0 30px 60px -28px rgba(5, 1, 14, 0.95), 0 0 40px -8px rgba(240, 91, 203, 0.75),
+    inset 0 1px 0 rgba(255, 155, 232, 0.2);
+}
+
+/* Imagem ocupando a direita, fundindo-se ao fundo pela máscara */
+.fcard__media {
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 72%;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.55) 22%, #000 48%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.55) 22%, #000 48%);
+}
+.fcard__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.05) brightness(0.95);
+  transition: transform 0.9s var(--ease), filter 0.4s;
+}
+.fcard:hover .fcard__media img {
+  transform: scale(1.04);
+  filter: saturate(1.12) brightness(1.08);
+}
+/* Gradiente escuro para legibilidade do texto */
+.fcard__shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(18, 8, 31, 0.96) 0%, rgba(18, 8, 31, 0.82) 40%, rgba(18, 8, 31, 0.25) 68%, transparent 100%),
+    linear-gradient(0deg, rgba(18, 8, 31, 0.55), transparent 45%);
+}
+
+.fcard__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  max-width: 62%;
+  padding: 24px 0 24px 24px;
+}
+.fcard__head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.fcard__icon {
+  flex: none;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  color: #fff;
+  background: linear-gradient(140deg, #7629d9, #d52bbd 70%, #f05bcb);
+  box-shadow: 0 0 0 1px rgba(255, 155, 232, 0.45), 0 10px 28px -8px rgba(213, 43, 189, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.fcard__icon svg {
+  width: 30px;
+  height: 30px;
+}
+.fcard__18 {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  font-family: var(--font-head);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.fcard__title {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(19px, 1.75vw, 25px);
+  font-weight: 800;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+.fcard__title .is-accent {
+  background: linear-gradient(100deg, #f05bcb, #d52bbd);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 12px rgba(240, 91, 203, 0.35));
+}
+.fcard__text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #ece6f5;
+  text-shadow: 0 1px 8px rgba(10, 4, 20, 0.8);
+}
+.fcard__tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  font-size: 10px;
+  background: rgba(30, 14, 50, 0.85);
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1180px) {
+  .fcard__body {
+    max-width: 70%;
+  }
+}
+@media (max-width: 1024px) {
+  .fsection__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 680px) {
+  .fsection {
+    padding: 76px 0 80px;
+  }
+  .fsection__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .fcard {
+    min-height: 220px;
+  }
+  .fcard__media {
+    width: 78%;
+  }
+  .fcard__body {
+    max-width: 72%;
+    padding: 22px 0 22px 20px;
+    gap: 12px;
+  }
+  .fcard__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+  }
+  .fcard__icon svg {
+    width: 25px;
+    height: 25px;
+  }
+  .fcard__18 {
+    width: 29px;
+    height: 29px;
+    font-size: 11px;
+  }
+  .fcard__text {
+    font-size: 14px;
+  }
+  .fsection__beam {
+    width: 70%;
+  }
+}
+/* Telas muito estreitas: imagem vira faixa de fundo mais escura */
+@media (max-width: 380px) {
+  .fcard__body {
+    max-width: 82%;
+  }
+  .fcard__shade {
+    background: linear-gradient(90deg, rgba(18, 8, 31, 0.96) 0%, rgba(18, 8, 31, 0.86) 55%, rgba(18, 8, 31, 0.35) 85%, rgba(18, 8, 31, 0.2) 100%);
+  }
+}

@@ -1,0 +1,250 @@
+/* ============================================================
+   Card de vídeo — borda com luz que percorre a moldura
+   ============================================================ */
+.vplayer {
+  position: relative;
+  width: 100%;
+  transition: transform 0.6s var(--ease);
+}
+.vplayer:hover {
+  transform: translateY(-4px);
+}
+
+/* Brilho suave atrás do player */
+.vplayer__glow {
+  position: absolute;
+  inset: 8% 4% -6%;
+  z-index: 0;
+  border-radius: 40px;
+  background: radial-gradient(60% 70% at 30% 40%, rgba(118, 41, 217, 0.7), transparent 70%),
+    radial-gradient(55% 65% at 75% 60%, rgba(213, 43, 189, 0.55), transparent 70%);
+  filter: blur(42px);
+  opacity: 0.75;
+  animation: vp-glow 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Moldura: o pseudo-elemento gira um gradiente cônico atrás
+   de uma tela interna, deixando só 1.5px visível (a borda). */
+.vplayer__frame {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 16 / 9;
+  padding: 1.5px;
+  border-radius: 22px;
+  overflow: hidden;
+  isolation: isolate;
+  background: rgba(118, 41, 217, 0.35);
+  box-shadow: 0 40px 90px -40px rgba(118, 41, 217, 0.95), 0 0 70px -30px rgba(240, 91, 203, 0.7);
+}
+.vplayer__frame::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: conic-gradient(
+    from 0deg,
+    #160b2d 0deg,
+    #5421a8 60deg,
+    #7629d9 110deg,
+    #d52bbd 150deg,
+    #f05bcb 172deg,
+    #ffffff 180deg,
+    #f05bcb 188deg,
+    #d52bbd 210deg,
+    #7629d9 250deg,
+    #5421a8 300deg,
+    #160b2d 360deg
+  );
+  animation: vp-spin 6s linear infinite;
+}
+
+.vplayer__screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 20.5px;
+  background: radial-gradient(90% 90% at 50% 40%, #1e0e3b 0%, #0c0519 60%, #07030f 100%);
+}
+.vplayer__screen::after {
+  /* reflexo de vidro */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.07) 0%, transparent 32%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), inset 0 -60px 80px -40px rgba(118, 41, 217, 0.35);
+}
+.vplayer.is-playing .vplayer__screen::after {
+  opacity: 0;
+}
+
+.vplayer__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+  background: #000;
+}
+
+/* Apresentação enquanto não há vídeo */
+.vplayer__placeholder {
+  position: absolute;
+  inset: 0;
+}
+.vplayer__grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 155, 232, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 155, 232, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(70% 70% at 50% 50%, #000, transparent 80%);
+  -webkit-mask-image: radial-gradient(70% 70% at 50% 50%, #000, transparent 80%);
+}
+.vplayer__beam {
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  left: 0;
+  width: 35%;
+  background: linear-gradient(90deg, transparent, rgba(240, 91, 203, 0.12), transparent);
+  transform: translateX(-120%) skewX(-18deg);
+  animation: vp-beam 6.5s ease-in-out infinite;
+}
+
+.vplayer__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  pointer-events: none;
+}
+.vplayer__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.vplayer__play {
+  position: relative;
+  width: clamp(64px, 9vw, 92px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  pointer-events: auto;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.25), transparent 55%),
+    linear-gradient(140deg, #7629d9, #d52bbd 70%, #f05bcb);
+  box-shadow: 0 0 0 8px rgba(240, 91, 203, 0.1), 0 14px 40px -8px rgba(213, 43, 189, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.vplayer__play svg {
+  width: 36%;
+  height: 36%;
+  margin-left: 6%;
+}
+.vplayer__play:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 12px rgba(240, 91, 203, 0.14), 0 18px 60px -6px rgba(240, 91, 203, 1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.vplayer__play-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 155, 232, 0.55);
+  animation: vp-ring 2.6s ease-out infinite;
+}
+
+.vplayer__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: var(--font-head);
+  font-size: clamp(10.5px, 1vw, 12.5px);
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: #fff;
+  background: rgba(22, 11, 45, 0.6);
+  border: 1px solid var(--glass-border-strong);
+  backdrop-filter: blur(8px);
+}
+.vplayer__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-pink);
+  box-shadow: 0 0 10px var(--c-pink);
+}
+
+@keyframes vp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes vp-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+  }
+}
+@keyframes vp-ring {
+  from {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+@keyframes vp-beam {
+  0%,
+  20% {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  70%,
+  100% {
+    transform: translateX(380%) skewX(-18deg);
+  }
+}
+
+@media (max-width: 560px) {
+  .vplayer__frame {
+    border-radius: 16px;
+  }
+  .vplayer__screen {
+    border-radius: 14.5px;
+  }
+  .vplayer__overlay {
+    gap: 14px;
+  }
+  .vplayer__glow {
+    filter: blur(30px);
+  }
+}

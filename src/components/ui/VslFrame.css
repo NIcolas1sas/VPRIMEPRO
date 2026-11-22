@@ -1,0 +1,110 @@
+/* Moldura neon 16:9 para VSL */
+.vsl {
+  position: relative;
+  width: 100%;
+  padding-top: 18px; /* espaço para o selo sobre a borda */
+}
+.vsl__glow {
+  position: absolute;
+  inset: 8% 4% -6%;
+  border-radius: 40px;
+  background: radial-gradient(closest-side, rgba(213, 43, 189, 0.45), rgba(118, 41, 217, 0.18) 60%, transparent);
+  filter: blur(40px);
+  opacity: var(--vsl-glow, 1);
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+}
+.vsl__frame {
+  position: relative;
+  padding: clamp(6px, 0.8vw, 10px);
+  border-radius: clamp(20px, 2.4vw, 34px);
+  background: linear-gradient(160deg, rgba(48, 18, 82, 0.9), rgba(16, 6, 32, 0.95));
+  border: 2px solid rgba(240, 91, 203, 0.85);
+  box-shadow: 0 0 0 1px rgba(255, 155, 232, 0.25), 0 0 calc(28px * var(--vsl-glow, 1)) rgba(240, 91, 203, 0.55),
+    0 0 calc(70px * var(--vsl-glow, 1)) rgba(213, 43, 189, 0.3), inset 0 0 24px rgba(240, 91, 203, 0.2);
+  transition: box-shadow 1.2s ease;
+}
+/* brilho que percorre a borda */
+.vsl__frame::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from var(--vsl-a, 0deg), transparent 0 70%, rgba(255, 255, 255, 0.95) 80%, transparent 90%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: vsl-spin 7s linear infinite;
+  pointer-events: none;
+}
+@property --vsl-a {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+.vsl__screen {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: clamp(14px, 1.8vw, 26px);
+  overflow: hidden;
+  background: #0a0416;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+.vsl__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+  background: #000;
+}
+/* área vazia: escura, com leve profundidade */
+.vsl__empty {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 60% at 50% 45%, rgba(84, 33, 168, 0.18), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 30%);
+}
+.vsl__badge {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  padding: 9px clamp(18px, 2.4vw, 34px);
+  border-radius: 999px;
+  font-family: var(--font-head);
+  font-size: clamp(10.5px, 0.95vw, 13px);
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+  background: linear-gradient(180deg, #2a0f4d, #16082b);
+  border: 2px solid rgba(240, 91, 203, 0.85);
+  box-shadow: 0 0 18px rgba(240, 91, 203, 0.5);
+}
+
+@keyframes vsl-spin {
+  to {
+    --vsl-a: 360deg;
+  }
+}
+
+@media (max-width: 640px) {
+  .vsl__glow {
+    filter: blur(26px);
+    opacity: calc(var(--vsl-glow, 1) * 0.7);
+  }
+  .vsl__frame {
+    border-width: 1.5px;
+    box-shadow: 0 0 0 1px rgba(255, 155, 232, 0.2), 0 0 calc(18px * var(--vsl-glow, 1)) rgba(240, 91, 203, 0.45),
+      inset 0 0 16px rgba(240, 91, 203, 0.16);
+  }
+  .vsl__badge {
+    letter-spacing: 0.16em;
+    padding: 7px 16px;
+  }
+}

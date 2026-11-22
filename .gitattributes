@@ -1,0 +1,13 @@
+# Quebras de linha padronizadas (LF) — evita diferenças entre Windows e servidor
+* text=auto eol=lf
+
+# Binários
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.woff binary
+*.woff2 binary

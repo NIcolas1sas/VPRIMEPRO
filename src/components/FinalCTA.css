@@ -1,0 +1,299 @@
+/* ============================================================
+   CTA FINAL — fundo cinematográfico
+   ============================================================ */
+.fcta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(70px, 6vw, 100px) 0 clamp(80px, 7vw, 110px);
+  background: #1a0636;
+}
+
+/* ---------- Fundo ---------- */
+.fcta__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.fcta__photo {
+  position: absolute;
+  inset: -3%;
+  /* imagem 3:1 inteira pela largura, apoiada embaixo; o topo funde com a base roxa */
+  background: var(--fcta-bg) center bottom / 100% auto no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 1.4s ease, transform 2.4s var(--ease);
+}
+.fcta.is-in .fcta__photo {
+  opacity: 1;
+  transform: scale(1);
+  /* leve "respiração" das laterais iluminadas */
+  animation: fcta-breathe 12s ease-in-out 2.4s infinite alternate;
+}
+/* contraste no centro + fusão com a seção anterior e com o rodapé */
+.fcta__shade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(38% 60% at 50% 48%, rgba(20, 6, 40, 0.55), transparent 75%),
+    linear-gradient(180deg, var(--c-deep) 0%, transparent 16%, transparent 84%, rgba(22, 9, 44, 0.9) 100%);
+}
+
+/* ---------- Conteúdo ---------- */
+.fcta__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 900px;
+}
+.fcta__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-head);
+  font-size: clamp(26px, 2.6vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.fcta__brand img {
+  width: auto;
+  height: clamp(48px, 4.6vw, 66px);
+  filter: drop-shadow(0 0 16px rgba(213, 43, 189, 0.5));
+}
+.fcta__brand b {
+  color: var(--c-pink);
+}
+.fcta__title {
+  margin: 22px 0 0;
+  font-family: var(--font-head);
+  font-size: clamp(30px, 4.4vw, 62px);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 6px 30px rgba(5, 1, 14, 0.6);
+}
+.fcta__title span,
+.fcta__title em {
+  display: inline-block;
+}
+.fcta__title em {
+  font-style: normal;
+  background: linear-gradient(90deg, #ff4fcf, var(--c-pink) 50%, #d23cf0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(213, 43, 189, 0.5));
+}
+.fcta__lead {
+  margin: 18px 0 0;
+  max-width: 640px;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.5;
+  color: rgba(240, 234, 252, 0.88);
+}
+.fcta__btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
+  padding: clamp(16px, 1.6vw, 22px) clamp(32px, 3.4vw, 50px);
+  border-radius: 999px;
+  font-family: var(--font-head);
+  font-size: clamp(17px, 1.6vw, 22px);
+  font-weight: 800;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+  background: linear-gradient(100deg, #7629d9, #b02fd4 45%, #f05bcb);
+  box-shadow: 0 0 0 1px rgba(255, 155, 232, 0.35), 0 14px 40px -12px rgba(213, 43, 189, 0.85), 0 0 34px rgba(155, 77, 255, 0.45);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s;
+}
+/* brilho que atravessa o botão de tempos em tempos */
+.fcta__btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: fcta-shine 4.5s ease-in-out 2s infinite;
+}
+.fcta__btn svg {
+  width: 22px;
+  height: 22px;
+  transition: transform 0.35s var(--ease);
+}
+.fcta__btn .fcta__btn-play {
+  fill: none;
+  stroke: currentColor;
+}
+.fcta__btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 0 1px rgba(255, 155, 232, 0.55), 0 18px 44px -12px rgba(213, 43, 189, 0.95), 0 0 46px rgba(155, 77, 255, 0.6);
+}
+.fcta__btn:hover svg:last-child {
+  transform: translateX(4px);
+}
+
+.fcta__perks {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: center;
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.fcta__perks li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 4px clamp(18px, 2.4vw, 32px);
+  font-family: var(--font-head);
+  font-size: clamp(15px, 1.3vw, 18px);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+  color: #fff;
+}
+.fcta__perks li + li {
+  border-left: 1px solid rgba(255, 155, 232, 0.25);
+}
+.fcta__perks svg {
+  flex: none;
+  width: clamp(34px, 3vw, 44px);
+  height: clamp(34px, 3vw, 44px);
+  color: var(--c-pink);
+  filter: drop-shadow(0 0 8px rgba(240, 91, 203, 0.55));
+}
+
+/* ---------- Entrada (uma vez) ---------- */
+.fcta__brand,
+.fcta__title span,
+.fcta__title em,
+.fcta__lead,
+.fcta__btn,
+.fcta__perks li {
+  opacity: 0;
+  translate: 0 26px;
+}
+.fcta__brand {
+  translate: 0 0;
+  scale: 0.85;
+  filter: blur(6px);
+}
+.fcta.is-in .fcta__brand,
+.fcta.is-in .fcta__title span,
+.fcta.is-in .fcta__title em,
+.fcta.is-in .fcta__lead,
+.fcta.is-in .fcta__btn,
+.fcta.is-in .fcta__perks li {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  filter: none;
+  transition: opacity 0.9s var(--ease), translate 1s var(--ease), scale 1s var(--ease), filter 0.9s var(--ease),
+    transform 0.35s var(--ease), box-shadow 0.35s;
+}
+.fcta.is-in .fcta__brand {
+  transition-delay: 0.1s;
+}
+.fcta.is-in .fcta__title > :nth-child(1) {
+  transition-delay: 0.3s;
+}
+.fcta.is-in .fcta__title > :nth-child(2) {
+  transition-delay: 0.42s;
+}
+.fcta.is-in .fcta__title > :nth-child(3) {
+  transition-delay: 0.5s;
+}
+.fcta.is-in .fcta__lead {
+  transition-delay: 0.62s;
+}
+.fcta.is-in .fcta__btn {
+  transition-delay: 0.75s, 0.75s, 0.75s, 0.75s, 0s, 0s;
+}
+.fcta.is-in .fcta__perks li {
+  transition-delay: calc(0.95s + var(--i) * 0.12s);
+}
+
+@keyframes fcta-shine {
+  0%,
+  60% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+@keyframes fcta-breathe {
+  from {
+    filter: brightness(1) saturate(1);
+  }
+  to {
+    filter: brightness(1.12) saturate(1.12);
+  }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+  .fcta__photo {
+    background-size: cover;
+    background-position: center 70%;
+  }
+  .fcta__shade {
+    background: radial-gradient(60% 55% at 50% 45%, rgba(20, 6, 40, 0.7), rgba(20, 6, 40, 0.25) 80%),
+      linear-gradient(180deg, var(--c-deep) 0%, transparent 16%, transparent 84%, rgba(22, 9, 44, 0.9) 100%);
+  }
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 640px) {
+  .fcta {
+    padding: 64px 0 70px;
+  }
+  .fcta__photo {
+    /* mostra as luzes laterais e os objetos nas bordas, atrás do conteúdo */
+    background-size: auto 100%;
+    background-position: 50% 100%;
+  }
+  .fcta__shade {
+    background: linear-gradient(180deg, var(--c-deep) 0%, rgba(20, 6, 40, 0.55) 14%, rgba(20, 6, 40, 0.72) 50%, rgba(20, 6, 40, 0.55) 86%, rgba(22, 9, 44, 0.95) 100%);
+  }
+  .fcta__title {
+    font-size: clamp(27px, 8.4vw, 38px);
+  }
+  .fcta__lead {
+    font-size: 15.5px;
+  }
+  .fcta__btn {
+    width: 100%;
+    justify-content: center;
+    padding: 17px 20px;
+    font-size: 16.5px;
+  }
+  .fcta__perks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 0;
+    width: 100%;
+    margin-top: 32px;
+  }
+  .fcta__perks li {
+    padding: 4px 10px;
+    font-size: 14.5px;
+  }
+  .fcta__perks li:nth-child(3) {
+    border-left: 0;
+  }
+  .fcta__perks svg {
+    width: 30px;
+    height: 30px;
+  }
+}

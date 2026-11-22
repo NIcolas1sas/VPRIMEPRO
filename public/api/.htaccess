@@ -1,0 +1,13 @@
+# Backend V PRIME PRO (Hostinger)
+Options -Indexes
+
+# Bloqueia qualquer arquivo que não seja os dois endpoints públicos
+<FilesMatch "^(?!meta-event\.php$|braip-webhook\.php$).+$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>

@@ -1,0 +1,22 @@
+.video-slot {
+  margin: 56px auto 0;
+  max-width: 960px;
+}
+.video-slot__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border-strong);
+  background: #0b0518;
+  box-shadow: var(--shadow-soft), 0 0 90px -30px rgba(213, 43, 189, 0.6);
+}
+.video-slot__frame video,
+.video-slot__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}

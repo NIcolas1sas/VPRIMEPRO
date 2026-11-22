@@ -1,0 +1,6 @@
+Depoimentos (prints de conversas reais e autorizadas).
+Formato recomendado: imagem vertical 9:16 (ex.: 1080x1920), .webp ou .jpg.
+Para adicionar: coloque o arquivo nesta pasta e inclua uma linha em
+src/config/site.js -> testimonials, por exemplo:
+  { image: '/testimonials/depoimento-07.webp', alt: 'Conversa com cliente' },
+A ordem da lista é a ordem do carrossel. Não há limite de quantidade.

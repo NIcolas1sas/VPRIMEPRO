@@ -1,0 +1,2 @@
+Coloque aqui os 3 vídeos promocionais (ex.: apresentacao.mp4, esportes.mp4, catalogo.mp4)
+e informe os caminhos em src/config/site.js -> videos (ou no .env).
