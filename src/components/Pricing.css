@@ -578,9 +578,7 @@
     margin: 0 auto;
     gap: 34px;
   }
-  .plan--featured {
-    order: -1;
-  }
+  /* celular/tablet: ordem natural — 1 tela, 2 telas, 3 telas */
 }
 @media (max-width: 640px) {
   /* celular: laterais decorativas bem discretas, foco nos cards */

@@ -342,12 +342,36 @@
 
 /* ---------- Tablet ---------- */
 @media (max-width: 1024px) {
+  /* coluna única: VSL logo abaixo do texto e acima dos cards */
   .sports__inner {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
     max-width: 760px;
+    text-align: center;
   }
   .sports__copy {
-    text-align: center;
+    display: contents;
+  }
+  .sports__eyebrow {
+    order: 1;
+  }
+  .sports__title {
+    order: 2;
+  }
+  .sports__stroke {
+    order: 3;
+  }
+  .sports__lead {
+    order: 4;
+  }
+  .sports__vsl {
+    order: 5;
+    margin-top: 30px;
+  }
+  .sports__cards {
+    order: 6;
   }
   .sports__eyebrow {
     justify-content: center;

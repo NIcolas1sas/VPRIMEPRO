@@ -2,7 +2,8 @@
  * ============================================================
  *  RASTREAMENTO META — Pixel (navegador) + Conversions API (servidor)
  * ============================================================
- *  - Nada é carregado antes do consentimento do visitante (LGPD).
+ *  - O Pixel carrega ao abrir o site (sem aviso de cookies, por decisão
+ *    do projeto em 22/11/2026).
  *  - Cada evento recebe UM event_id, usado pelo Pixel E pelo servidor
  *    (/api/meta-event.php). A Meta junta os dois e conta uma vez só.
  *  - O token da Conversions API fica SOMENTE no servidor. Aqui só
@@ -21,38 +22,6 @@ export const tracking = {
   capiEndpoint: env.VITE_META_CAPI_ENDPOINT || '/api/meta-event.php',
   capiEnabled: env.VITE_META_CAPI_ENABLED ? env.VITE_META_CAPI_ENABLED !== 'false' : !env.DEV,
 };
-
-/* ---------------- Consentimento ---------------- */
-const CONSENT_KEY = 'vprime_cookie_consent'; // 'granted' | 'denied'
-const listeners = new Set();
-
-export function getConsent() {
-  try {
-    return localStorage.getItem(CONSENT_KEY);
-  } catch {
-    return null;
-  }
-}
-
-export function setConsent(value) {
-  try {
-    localStorage.setItem(CONSENT_KEY, value);
-  } catch {
-    /* navegação privada: vale só para esta visita */
-  }
-  memoryConsent = value;
-  if (value === 'granted') startTracking();
-  if (value === 'denied') stopTracking();
-  listeners.forEach((fn) => fn(value));
-}
-
-let memoryConsent = null;
-const hasConsent = () => (memoryConsent || getConsent()) === 'granted';
-
-export function onConsentChange(fn) {
-  listeners.add(fn);
-  return () => listeners.delete(fn);
-}
 
 /* ---------------- Utilidades ---------------- */
 export function newEventId(prefix = 'ev') {
@@ -95,7 +64,6 @@ function loadPixel() {
     })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
     /* eslint-enable */
   }
-  window.fbq('consent', 'grant');
   window.fbq('init', tracking.pixelId);
 }
 
@@ -121,12 +89,9 @@ function sendToServer(payload) {
   }
 }
 
-/**
- * Dispara um evento no Pixel e no servidor com o MESMO event_id.
- * Sem consentimento, não faz nada.
- */
+/** Dispara um evento no Pixel e no servidor com o MESMO event_id. */
 export function track(eventName, customData = {}, extra = {}) {
-  if (!hasConsent()) return null;
+  if (typeof window === 'undefined') return null;
   loadPixel();
   const eventId = newEventId(eventName.toLowerCase());
   window.fbq('track', eventName, customData, { eventID: eventId });
@@ -139,7 +104,7 @@ let pageViewSent = false;
 
 /** PageView: uma vez por carregamento (o site é uma página única, sem troca de rota). */
 export function trackPageView() {
-  if (pageViewSent || !hasConsent()) return;
+  if (pageViewSent) return;
   pageViewSent = true;
   track('PageView');
 }
@@ -148,7 +113,7 @@ let viewContentSent = false;
 
 /** ViewContent: quando a seção de planos (a oferta) aparece na tela. Uma vez por visita à página. */
 export function trackViewContent() {
-  if (viewContentSent || !hasConsent()) return;
+  if (viewContentSent) return;
   viewContentSent = true;
   track('ViewContent', {
     content_name: 'Planos V PRIME PRO',
@@ -158,6 +123,9 @@ export function trackViewContent() {
     currency: 'BRL',
   });
 }
+
+/** Alias usado pela seção de planos. */
+export const markOfferSeen = trackViewContent;
 
 /** InitiateCheckout: clique no botão de contratação de um plano. */
 export function trackInitiateCheckout(plan) {
@@ -175,25 +143,8 @@ export function trackInitiateCheckout(plan) {
   );
 }
 
-/* ---------------- Início / parada ---------------- */
-function startTracking() {
+/** Chamado uma vez ao abrir o site. */
+export function initTracking() {
   loadPixel();
   trackPageView();
-  if (pendingViewContent) trackViewContent();
-}
-
-function stopTracking() {
-  if (window.fbq) window.fbq('consent', 'revoke');
-}
-
-/** Se a oferta já foi vista antes do aceite, o ViewContent sai junto com o aceite. */
-let pendingViewContent = false;
-export function markOfferSeen() {
-  pendingViewContent = true;
-  trackViewContent();
-}
-
-/** Chamado uma vez ao abrir o site: retoma o rastreamento de quem já aceitou. */
-export function initTracking() {
-  if (hasConsent()) startTracking();
 }

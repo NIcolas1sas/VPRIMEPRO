@@ -254,13 +254,39 @@
 }
 
 @media (max-width: 1080px) {
+  /* coluna única: os itens do texto e a VSL viram uma só sequência,
+     com a VSL logo acima dos botões (CTAs) */
   .hero__inner {
-    grid-template-columns: 1fr;
-    gap: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
   }
   .hero__copy {
-    align-items: center;
-    text-align: center;
+    display: contents;
+  }
+  .hero__badge {
+    order: 1;
+  }
+  .hero__title {
+    order: 2;
+  }
+  .hero__lead {
+    order: 3;
+  }
+  .hero__sub {
+    order: 4;
+  }
+  .hero__visual {
+    order: 5;
+    margin: 12px auto 8px !important;
+  }
+  .hero__ctas {
+    order: 6;
+  }
+  .hero__indicators {
+    order: 7;
   }
   .hero__lead,
   .hero__sub {

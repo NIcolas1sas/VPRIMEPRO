@@ -129,6 +129,8 @@ export const site = {
    * Preferencialmente via .env → VITE_WHATSAPP_NUMBER
    */
   support: {
+    // Botão flutuante do WhatsApp (canto inferior direito) — link exato informado pela empresa
+    whatsappUrl: env.VITE_WHATSAPP_URL || 'https://wa.me/5542991476811',
     whatsappNumber: env.VITE_WHATSAPP_NUMBER || '',
     whatsappMessage: 'Olá! Gostaria de saber mais sobre a V PRIME PRO.',
     email: env.VITE_SUPPORT_EMAIL || '',

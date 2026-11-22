@@ -1,6 +1,5 @@
 import { site } from '../config/site.js';
 import { onAnchor } from '../lib/scroll.js';
-import { openCookiePreferences } from './CookieConsent.jsx';
 import './Footer.css';
 
 /** Rodapé com duas áreas: marca + navegação. */
@@ -47,12 +46,7 @@ export default function Footer() {
           <p>
             © {year} {site.brand.name}. Todos os direitos reservados.
           </p>
-          <p className="footer__muted">
-            Imagens e interfaces exibidas nesta página são ilustrativas.{' '}
-            <button type="button" className="footer__cookies" onClick={openCookiePreferences}>
-              Preferências de cookies
-            </button>
-          </p>
+          <p className="footer__muted">Imagens e interfaces exibidas nesta página são ilustrativas.</p>
         </div>
       </div>
     </footer>

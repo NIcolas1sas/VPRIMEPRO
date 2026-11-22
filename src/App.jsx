@@ -17,10 +17,16 @@ import Footer from './components/Footer.jsx';
 import { NoticeProvider } from './components/ui/Notice.jsx';
 import useReveal from './hooks/useReveal.js';
 import Intro from './components/Intro.jsx';
-import CookieConsent from './components/CookieConsent.jsx';
+import { useEffect } from 'react';
+import WhatsAppFloat from './components/WhatsAppFloat.jsx';
+import { initTracking } from './lib/tracking.js';
 
 export default function App() {
   useReveal();
+  // Meta Pixel + Conversions API: PageView ao abrir o site
+  useEffect(() => {
+    initTracking();
+  }, []);
   return (
     <NoticeProvider>
       <Intro />
@@ -45,8 +51,8 @@ export default function App() {
         <FinalCTA />
       </main>
       <Footer />
-      {/* Consentimento de cookies + Meta Pixel / Conversions API */}
-      <CookieConsent />
+      {/* Botão flutuante do WhatsApp (suporte) */}
+      <WhatsAppFloat />
     </NoticeProvider>
   );
 }
